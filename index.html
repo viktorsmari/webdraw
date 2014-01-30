@@ -1,0 +1,78 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="description" content="">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Programming assignment 1</title>
+		<link rel="author" href="humans.txt">
+		<!-- Bootstrap -->
+		<link href="css/bootstrap.min.css" rel="stylesheet">
+		<link rel="stylesheet" href="css/style.css">
+		<script src="jscolor/jscolor.js"></script>
+		<script src="classes.js"></script>
+		<script src="js/Base.js"></script> <!-- Addon class -->
+		
+	</head>
+	<body>
+		<canvas id="myCanvas" width="650px" height="400px">See me?</canvas>
+
+		<div class="clearfix"></div>
+		
+		<div class="radcontrol" id="bigger" href="#">+</div>
+		<div class="radcontrol" id="smaller" href="#">-</div>
+		<div id="slider" class="col-md-6"></div>
+		Linewidth: <span id="radius"></span> | 
+		
+		<!-- <label>Drawing tool: 
+			<select id="dtool">
+	        <option value="line">Line</option>
+	        <option value="rect">Rectangle</option>
+	        <option value="pencil">Pencil</option>
+	    </select></label></p>
+ -->
+ 	<div>
+		<button id="undo">Undo</button>
+		<button id="redo">Redo</button>
+		<button id="clear">Clear</button>
+		<button id="load">Load</button>
+		<button id="save">Save</button>
+
+		<button id="line">Line</button>
+		<button id="pen">Pen</button>
+		<button id="rectangle">Rectangle</button>
+		<button id="text">Text</button>
+ 	</div>
+	
+		<input class="color">
+		<div id="colors">
+			<div class="swatch" style="background-color: yellow"></div>
+			<div class="swatch" style="background-color: red"></div>
+			<div class="swatch" style="background-color: green"></div>
+			<div class="swatch" style="background-color: blue"></div>
+			<div class="swatch" style="background-color: black"></div>
+			<div class="swatch" style="background-color: white"></div>
+			<div class="swatch" style="background-color: grey"></div>
+			<div class="swatch" style="background-color: purple"></div>
+		</div>
+
+
+		
+		<div>
+			<ul>
+				<li><a href="#">Font?</a></li>
+				<li><a href="#">Move</a></li>
+			</ul>
+		</div>
+
+
+		<script src="js/jquery.js"></script>
+		<script src="script.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<!-- jQuery slider -->
+		<!-- // <script src="http://code.jquery.com/jquery-1.9.1.js"></script> -->
+		<script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+		<!-- jQuery slider -->
+		<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+	</body>
+</html>
