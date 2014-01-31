@@ -50,6 +50,7 @@ Rectangle.prototype.addPoint = function(p, color, radius) {
 }
 
 Rectangle.prototype.draw = function(ctx) {
+	ctx.beginPath(); // So each line can have it's own color
 	var width = this.end.x - this.start.x;
 	var height = this.end.y - this.start.y;
 	ctx.rect(this.start.x,this.start.y,width, height);
@@ -76,6 +77,7 @@ Line.prototype.addPoint = function (p, color, radius) {
 
 }
 Line.prototype.draw = function (ctx) {
+	ctx.beginPath(); // So each line can have it's own color
 	ctx.moveTo(this.start.x, this.start.y);
 	ctx.lineTo(this.end.x, this.end.y);
 
@@ -97,6 +99,7 @@ Texti.prototype.addPoint = function (p, color){
 }
 
 Texti.prototype.draw = function (ctx) {
+	ctx.beginPath(); // So each line can have it's own color
 	ctx.font = "30px Arial";
 	ctx.fillText( "22", this.start.x, this.start.y);
 }
