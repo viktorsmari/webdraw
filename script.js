@@ -13,12 +13,18 @@ $(document).ready(function(){
 	var currentTool = undefined;
 	var currentToolType = 0;
 	var radius = 2;
-	var currentColor = undefined;
+	var currentColor = "#000";
 
 	// #################### Tools ###########################
 
+	$("button").click(function() {
+		$("button").css("background-color","#777");
+		$(this).css("background-color","yellow");
+	});
+	
+
 	$("#line").click(function()	{
-		console.log("Selecting Line, does not exist");
+		console.log("Selecting Line");
 		currentToolType = 2;
 	});
 
@@ -32,6 +38,11 @@ $(document).ready(function(){
 		currentToolType = 1;
 	});
 
+	$("#text").click(function()	{
+		console.log("Selecting Text tools");
+		currentToolType = 3;
+	});
+
 	function createNewTool() {
 		if (currentToolType === 0){
 			return new Pen();				// Do we need arguments to construct?
@@ -39,6 +50,8 @@ $(document).ready(function(){
 			return new Rectangle();
 		}else if (currentToolType === 2){
 			return new Line();
+		}else if (currentToolType === 3){
+			return new Texti();
 		}
 	}
 
@@ -59,7 +72,6 @@ $(document).ready(function(){
 	}
 
 	var mmove = function (e){
-
 		if(isDrawing){
 			ctx.lineWidth = radius * 2;
 			var x = e.pageX;
@@ -96,15 +108,15 @@ $(document).ready(function(){
 
 	// #################### Color ###########################
 
-	function setColor(color){
-		ctx.fillStyle = color;
+	function setColor(color){		// Needs update    TODO
+		ctx.fillStyle = color;		// Is this obsolete?
 		ctx.strokeStyle = color;
 		currentColor = color;
+		console.log("Color change to:" + currentColor);
 	}
 
 	$(".color").blur(function() {
 		setColor($(".color").css("background-color"));
-		console.log("Color change");
 	});
 
 	$(".swatch").click(function(){

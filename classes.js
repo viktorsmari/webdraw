@@ -1,20 +1,18 @@
 function Point(x, y) {
 	this.x = x;
 	this.y = y;
-	// this.color = color;
-	// this.radius = radius;
 }
 
 function Pen(color) {
 	this.points = [];
-	this.color = [];
+	this.color = '';
 	this.radius = undefined;
 	//console.log(color);
 }
 
-Pen.prototype.addPoint = function(p,color,radius) {
+Pen.prototype.addPoint = function(p, color, radius) {
 	this.points.push(p);
-	this.color.push(color);
+	this.color = color;
 	this.radius = radius;
 }
 
@@ -31,12 +29,12 @@ Pen.prototype.draw = function(ctx) {
 		}
 	}
 }
-//############### Rectangle ################
+// ############### Rectangle ################
 function Rectangle() {
 	this.start = undefined;
 	this.end = undefined;
 
-	this.color = rgb(0,0,0);	// Default color is black
+	this.color = "rgb(0,0,0)";	// Default color is black
 }
 
 Rectangle.prototype.addPoint = function(p, color, radius) {
@@ -58,7 +56,7 @@ Rectangle.prototype.draw = function(ctx) {
 	ctx.stroke();
 }
 
-//############### Line  ################
+// ############### Line  ################
 
 function Line(){
 	this.start = undefined;
@@ -66,7 +64,7 @@ function Line(){
 	this.color = undefined;
 }
 
-Line.prototype.addPoint = function ( p, color, radius) {
+Line.prototype.addPoint = function (p, color, radius) {
 	if(this.start === undefined){
 		this.start = p;
 		console.log("Adding START point for line");
@@ -81,14 +79,27 @@ Line.prototype.draw = function (ctx) {
 	ctx.moveTo(this.start.x, this.start.y);
 	ctx.lineTo(this.end.x, this.end.y);
 
-	// ctx.moveTo(0,0);
-	// ctx.lineTo(100,100);
+	//ctx.fillStyle = color; // Does this work??
+
 	ctx.stroke();
 }
 
+// ############### Text  ################
 
+function Texti() {
+	this.start = undefined;
+	this.color = undefined;
+}
 
+Texti.prototype.addPoint = function (p, color){
+	this.start = p;
+	this.color = color;
+}
 
+Texti.prototype.draw = function (ctx) {
+	ctx.font = "30px Arial";
+	ctx.fillText( "22", this.start.x, this.start.y);
+}
 
 
 
