@@ -19,7 +19,7 @@ $(document).ready(function(){
 
 	$("#line").click(function()	{
 		console.log("Selecting Line, does not exist");
-		//currentToolType = 2;
+		currentToolType = 2;
 	});
 
 	$("#pen").click(function()	{
@@ -37,6 +37,8 @@ $(document).ready(function(){
 			return new Pen();				// Do we need arguments to construct?
 		}else if (currentToolType === 1){
 			return new Rectangle();
+		}else if (currentToolType === 2){
+			return new Line();
 		}
 	}
 

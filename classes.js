@@ -31,15 +31,15 @@ Pen.prototype.draw = function(ctx) {
 		}
 	}
 }
-
+//############### Rectangle ################
 function Rectangle() {
 	this.start = undefined;
 	this.end = undefined;
 
-	this.color = undefined;
+	this.color = rgb(0,0,0);	// Default color is black
 }
 
-Rectangle.prototype.addPoint = function(p,color) {
+Rectangle.prototype.addPoint = function(p, color, radius) {
 	if(this.start === undefined) {
 		this.start = p;
 		console.log("Adding start point to rectangle");
@@ -57,3 +57,38 @@ Rectangle.prototype.draw = function(ctx) {
 	ctx.rect(this.start.x,this.start.y,width, height);
 	ctx.stroke();
 }
+
+//############### Line  ################
+
+function Line(){
+	this.start = undefined;
+	this.end = undefined;
+	this.color = undefined;
+}
+
+Line.prototype.addPoint = function ( p, color, radius) {
+	if(this.start === undefined){
+		this.start = p;
+		console.log("Adding START point for line");
+	}else{
+		this.end = p;
+		console.log("Adding END point for line");
+	}
+	this.color = color;
+
+}
+Line.prototype.draw = function (ctx) {
+	ctx.moveTo(this.start.x, this.start.y);
+	ctx.lineTo(this.end.x, this.end.y);
+
+	// ctx.moveTo(0,0);
+	// ctx.lineTo(100,100);
+	ctx.stroke();
+}
+
+
+
+
+
+
+
