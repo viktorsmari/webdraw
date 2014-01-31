@@ -15,9 +15,9 @@ $(document).ready(function(){
 	var radius = 2;
 	var currentColor = "#000";
 
-	// #################### Tools ###########################
+	// #################### Tools / buttons  ######################
 
-	$("button").click(function() {
+	$(".tools button").click(function() {
 		$("button").css("background-color","#777");
 		$(this).css("background-color","yellow");
 	});

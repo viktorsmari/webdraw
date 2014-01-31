@@ -46,3 +46,11 @@ button {
 	background-color: #777;
 	
 }
+
+.tools, .commands {
+	/*float:left;*/
+	display: inline-block;
+
+	padding-right: 30px;
+	padding-bottom:15px;
+}
