@@ -3,9 +3,11 @@ function Point(x, y) {
 	this.y = y;
 }
 
+// ############### Rectangle ################
+
 function Pen(color) {
 	this.points = [];
-	this.color = '';
+	this.color = undefined;
 	this.radius = undefined;
 	//console.log(color);
 }
@@ -20,6 +22,9 @@ Pen.prototype.draw = function(ctx) {
 	for(var i = 0; i < this.points.length; ++i) {
 		
 		var currentPoint = this.points[i];
+
+		ctx.strokeStyle = this.color; // Does this work??
+		ctx.fillStyle = this.color; // Does this work??
 		
 		if(i == 0) {
 			ctx.moveTo(currentPoint.x, currentPoint.y);
@@ -34,7 +39,7 @@ function Rectangle() {
 	this.start = undefined;
 	this.end = undefined;
 
-	this.color = "rgb(0,0,0)";	// Default color is black
+	this.color = undefined;	// Default color is black
 }
 
 Rectangle.prototype.addPoint = function(p, color, radius) {
@@ -54,6 +59,7 @@ Rectangle.prototype.draw = function(ctx) {
 	var width = this.end.x - this.start.x;
 	var height = this.end.y - this.start.y;
 	ctx.rect(this.start.x,this.start.y,width, height);
+	ctx.strokeStyle = this.color; // Does this work??
 	ctx.stroke();
 }
 
@@ -66,6 +72,7 @@ function Line(){
 }
 
 Line.prototype.addPoint = function (p, color, radius) {
+	this.color = color;
 	if(this.start === undefined){
 		this.start = p;
 		console.log("Adding START point for line");
@@ -73,15 +80,13 @@ Line.prototype.addPoint = function (p, color, radius) {
 		this.end = p;
 		console.log("Adding END point for line");
 	}
-	this.color = color;
 
 }
 Line.prototype.draw = function (ctx) {
 	ctx.beginPath(); // So each line can have it's own color
+	ctx.strokeStyle = this.color; // Saving each lines color??
 	ctx.moveTo(this.start.x, this.start.y);
 	ctx.lineTo(this.end.x, this.end.y);
-
-	//ctx.fillStyle = color; // Does this work??
 
 	ctx.stroke();
 }
@@ -100,8 +105,10 @@ Texti.prototype.addPoint = function (p, color){
 
 Texti.prototype.draw = function (ctx) {
 	ctx.beginPath(); // So each line can have it's own color
+	ctx.fillStyle = this.color; // Does this work??
 	ctx.font = "30px Arial";
 	ctx.fillText( "22", this.start.x, this.start.y);
+
 }
 
 
