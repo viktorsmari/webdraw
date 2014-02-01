@@ -14,6 +14,7 @@ $(document).ready(function(){
 	var currentToolType = 0;
 	var radius = 2;
 	var currentColor = "#000";
+	var texti = "Hello world";
 
 	// #################### Tools / buttons  ######################
 
@@ -43,6 +44,12 @@ $(document).ready(function(){
 		currentToolType = 3;
 	});
 
+	//document.getElementById('textabox').value;
+	$("#textabox").blur( function() {
+		texti = $(this).val();
+		console.log(texti);
+	});
+
 	function createNewTool() {
 		if (currentToolType === 0){
 			return new Pen();				// Do we need arguments to construct?
@@ -64,7 +71,7 @@ $(document).ready(function(){
 		var x = e.pageX;
 		var y = e.pageY;
 		var point = new Point(x, y);
-		currentTool.addPoint(point,currentColor,radius);		// Add point to list
+		currentTool.addPoint(point,currentColor,radius,texti);		// Add point to list
 		ctx.moveTo(x,y);
 
 		console.log("Color: " + currentColor, "Radius: " + radius);
@@ -78,7 +85,7 @@ $(document).ready(function(){
 			var y = e.pageY;
 		
 			var point = new Point(x,y); 	// Create new point if pen is moved
-			currentTool.addPoint(point,currentColor,radius);		// Add that point to the list
+			currentTool.addPoint(point,currentColor,radius,texti);		// Add that point to the list
 
 			// ctx.lineTo(x, y);
 			// ctx.stroke();

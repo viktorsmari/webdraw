@@ -19,11 +19,15 @@ Pen.prototype.addPoint = function(p, color, radius) {
 }
 
 Pen.prototype.draw = function(ctx) {
+	
+	ctx.beginPath();
+	ctx.lineWidth = this.radius;
+	ctx.strokeStyle = this.color;
+	
 	for(var i = 0; i < this.points.length; ++i) {
 		
 		var currentPoint = this.points[i];
 
-		// ctx.strokeStyle = this.color; // Does this work??
 		// ctx.fillStyle = this.color; // Does this work??
 		
 		if(i == 0) {
@@ -34,6 +38,7 @@ Pen.prototype.draw = function(ctx) {
 		}
 	}
 }
+
 // ############### Rectangle ################
 function Rectangle() {
 	this.start = undefined;
@@ -100,23 +105,25 @@ function Texti() {
 	this.start = undefined;
 	this.color = undefined;
 	this.radius = 22;
+	this.textmsg = undefined;
 }
 
-Texti.prototype.addPoint = function (p, color, radius){
+Texti.prototype.addPoint = function (p, color, radius, texti){
 	this.start = p;
 	this.color = color;
 	this.radius = radius;
+	this.textmsg = texti;
 }
 
 Texti.prototype.draw = function (ctx) {
 	ctx.beginPath(); // So each line can have it's own color
 	ctx.fillStyle = this.color; 
 	// TODO : choose another font from a option / select box. 
-	// TODO : Take in text
+	// TODO : Take in custom text
 	// example : ctx.font = "30px Arial";
 	ctx.font = String(this.radius + "px Arial");
-	console.log(ctx.font);
-	ctx.fillText( "Some text", this.start.x, this.start.y);
+	//var textboxval = document.getElementById('textabox').value;
+	ctx.fillText(this.textmsg, this.start.x, this.start.y);
 
 }
 
