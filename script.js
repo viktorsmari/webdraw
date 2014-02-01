@@ -12,7 +12,7 @@ $(document).ready(function(){
 	var shapes = [];
 	var currentTool = undefined;
 	var currentToolType = 0;
-	var radius = 2;
+	var lineWidth = 2;
 	var currentColor = "#000";
 	var texti = "Hello world";
 
@@ -39,9 +39,17 @@ $(document).ready(function(){
 		currentToolType = 1;
 	});
 
+	$("#circle").click(function()	{
+		console.log("Selecting Circle");
+		currentToolType = 4;
+	});
+
 	$("#text").click(function()	{
 		console.log("Selecting Text tools");
 		currentToolType = 3;
+		lineWidth = 30;
+		$("#lineWidth").html(lineWidth);
+		$("#slider").slider("value",lineWidth);
 	});
 
 	//document.getElementById('textabox').value;
@@ -59,10 +67,12 @@ $(document).ready(function(){
 			return new Line();
 		}else if (currentToolType === 3){
 			return new Texti();
+		}else if (currentToolType === 4){
+			return new Circle();
 		}
 	}
 
-	// ####################   ###########################
+	// #################### Mouse  ###########################
 
 	var mdown = function(e){
 		currentTool = createNewTool();			// Returns new Pen or new Rect
@@ -71,26 +81,26 @@ $(document).ready(function(){
 		var x = e.pageX;
 		var y = e.pageY;
 		var point = new Point(x, y);
-		currentTool.addPoint(point,currentColor,radius,texti);		// Add point to list
+		currentTool.addPoint(point,currentColor,lineWidth,texti);		// Add point to list
 		ctx.moveTo(x,y);
 
-		console.log("Color: " + currentColor, "Radius: " + radius);
+		console.log("Color: " + currentColor, "lineWidth: " + lineWidth);
 	//	mmove(e);			 // So we can add single dots
 	}
 
 	var mmove = function (e){
 		if(isDrawing){
-			ctx.lineWidth = radius * 2;
+			ctx.lineWidth = lineWidth * 2;
 			var x = e.pageX;
 			var y = e.pageY;
 		
 			var point = new Point(x,y); 	// Create new point if pen is moved
-			currentTool.addPoint(point,currentColor,radius,texti);		// Add that point to the list
+			currentTool.addPoint(point,currentColor,lineWidth,texti);		// Add that point to the list
 
 			// ctx.lineTo(x, y);
 			// ctx.stroke();
 			// ctx.beginPath();
-			// ctx.arc(x, y, radius, 0, Math.PI*2);	// Create a circle
+			// ctx.arc(x, y, lineWidth, 0, Math.PI*2);	// Create a circle
 			// ctx.fill();
 			// ctx.beginPath();
 			// ctx.moveTo(x, y);
@@ -153,6 +163,7 @@ $(document).ready(function(){
 	$("#redo").click(function() {
 		console.log("Redoing")
 		drawShapes();
+		// TODO - not working!
 	});
 
 	$("#clear").click(function() {
@@ -162,35 +173,43 @@ $(document).ready(function(){
 
 	$("#load").click(function() {
 		console.log("Loading")
+		// TODO 
 	});
 
 	$("#save").click(function() {
 		console.log("Saving")
+		// TODO 
 	});
 
 	
-	// #################### Slider #############################
+	// #################### Slider lineWidth ##########################
+	function setlineWidth(x){
+		lineWidth = x;
+		$("#lineWidth").html(lineWidth);				// Update number
+		$("#slider").slider("value",lineWidth);	// Update slider
+		console.log("lineWidth change to: " + lineWidth);
+	}
+	function getlineWidth(){
+		return lineWidth;
+	}
 
-	$(function(){
+	$(function(){				// Initialize slider function.
 		$("#slider").slider();
-		$("#slider").slider("value",radius);
-	});
-	$("#slider").on("slidechange",function(){
-		radius = $("#slider").slider("value");
-		$("#radius").html(radius);
+		$("#slider").slider("value",lineWidth);
 	});
 
-	// Bigger  - smaller pen size
+	$("#slider").on("slidechange",function(){
+		lineWidth = $("#slider").slider("value");
+		$("#lineWidth").html(lineWidth);
+	});
+
+	// Bigger / smaller Buttons
 	$("#bigger").click(function(){
-		radius++;
-		$("#radius").html(radius);
-		$("#slider").slider("value",radius);
+		setlineWidth(getlineWidth()+1);
 	});
 
 	$("#smaller").click(function(){
-		radius--;
-		$("#radius").html(radius);
-		$("#slider").slider("value",radius);
+		setlineWidth((getlineWidth()-1));
 	});
 
 	// #################### Color picker #######################
