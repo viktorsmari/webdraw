@@ -19,18 +19,21 @@
 
 		<div class="clearfix"></div>
 		
-		<div class="radcontrol" id="bigger" href="#">+</div>
 		<div class="radcontrol" id="smaller" href="#">-</div>
+		<div class="radcontrol" id="bigger" href="#">+</div>
 		<div id="slider" class="col-md-6"></div>
 		Linewidth: <span id="lineWidth"></span> | 
+		<select id="fontselect">
+			<option value="Arial">Arial</option>
+			<option value="Comic Sans MS">Comic Sans MS</option>
+			<option value="impact">Impact</option>
+			<option value="fantasy">Fantasy</option>
+			<option value="Tahoma">Tahoma</option>
+			<option value="Trebuchet MS">Trebuchet</option>
+			<option value="Verdana">Verdana</option>
+		</select>
 		
-		<!-- <label>Drawing tool: 
-			<select id="dtool">
-	        <option value="line">Line</option>
-	        <option value="rect">Rectangle</option>
-	        <option value="pencil">Pencil</option>
-	    </select></label></p>
- -->
+
 		<div id="colors">
 			<div class="swatch" style="background-color: yellow"></div>
 			<div class="swatch" style="background-color: red"></div>
@@ -40,17 +43,20 @@
 			<div class="swatch" style="background-color: white"></div>
 			<div class="swatch" style="background-color: grey"></div>
 			<div class="swatch" style="background-color: purple"></div>
+			<input class="color">
 		</div>
-		<input class="color">
 	 	<div>
 			<div class="tools">
 				<button id="line">Line</button>
 				<button id="pen">Pen</button>
 				<button id="rectangle">Rectangle</button>
-				<button id="circle">-- Circle --</button>
+				<button id="circle">Circle</button>
 				<button id="text">Text</button>
 				<input id="textabox" type="text">
+
 			</div>
+	 	</div>
+
 		 	<div class="commands">
 				<button id="undo">Undo</button>
 				<button id="redo">Redo</button>
@@ -58,13 +64,13 @@
 				<button id="load">Load</button>
 				<button id="save">Save</button>
 		 	</div>
-	 	</div>
 	
 		
 		<div>
 			<ul>
-				<li><a href="#">Font?</a></li>
-				<li><a href="#">Move</a></li>
+				<li><a href="#">Textbox appear on drawing? Hidden?</a></li>
+				<li><a href="#">Load / save</a></li>
+				<li><a href="#">Move objects</a></li>
 			</ul>
 		</div>
 

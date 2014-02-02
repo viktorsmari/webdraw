@@ -26,9 +26,10 @@ canvas{
 }
 
 #colors{
-	width: 400px;
-	
-	outline: 1px solid black;
+	width: 600px;
+	/*padding: 5px;*/
+	margin:5px;
+	/*outline: 2px solid black;*/
 	/*float: right;*/
 }
 
@@ -42,15 +43,20 @@ canvas{
 	background-color: cyan; 
 }
 
-button {
+.tools button {
 	background-color: #777;
-	
+}
+#pen{
+	background-color: yellow;
 }
 
 .tools, .commands {
 	/*float:left;*/
 	display: inline-block;
-
 	padding-right: 30px;
 	padding-bottom:15px;
+}
+#slider{
+	width: 330px;
+	margin:7px;
 }

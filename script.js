@@ -15,33 +15,43 @@ $(document).ready(function(){
 	var lineWidth = 2;
 	var currentColor = "#000";
 	var texti = "Hello world";
+	var fontur = "Arial";
 
 	// #################### Tools / buttons  ######################
 
 	$(".tools button").click(function() {
-		$("button").css("background-color","#777");
+		$(".tools button").css("background-color","#777");
 		$(this).css("background-color","yellow");
 	});
-	
+
+	$("#fontselect").blur(function(){
+		fontur = $("#fontselect").val();
+	});
+
 
 	$("#line").click(function()	{
 		console.log("Selecting Line");
 		currentToolType = 2;
+		setlineWidth(1);
 	});
 
 	$("#pen").click(function()	{
 		console.log("Selecting Pen");
 		currentToolType = 0;
+		setlineWidth(2);
 	});
 
 	$("#rectangle").click(function()	{
 		console.log("Selecting Rectangle");
 		currentToolType = 1;
+		setlineWidth(2);
 	});
 
 	$("#circle").click(function()	{
 		console.log("Selecting Circle");
 		currentToolType = 4;
+		setlineWidth(3);
+		
 	});
 
 	$("#text").click(function()	{
@@ -52,7 +62,8 @@ $(document).ready(function(){
 		$("#slider").slider("value",lineWidth);
 	});
 
-	//document.getElementById('textabox').value;
+	// TODO  = make this pop up when the canvas is clicked.
+
 	$("#textabox").blur( function() {
 		texti = $(this).val();
 		console.log(texti);
@@ -81,7 +92,7 @@ $(document).ready(function(){
 		var x = e.pageX;
 		var y = e.pageY;
 		var point = new Point(x, y);
-		currentTool.addPoint(point,currentColor,lineWidth,texti);		// Add point to list
+		currentTool.addPoint(point,currentColor,lineWidth,texti,fontur);		
 		ctx.moveTo(x,y);
 
 		console.log("Color: " + currentColor, "lineWidth: " + lineWidth);
@@ -95,7 +106,7 @@ $(document).ready(function(){
 			var y = e.pageY;
 		
 			var point = new Point(x,y); 	// Create new point if pen is moved
-			currentTool.addPoint(point,currentColor,lineWidth,texti);		// Add that point to the list
+			currentTool.addPoint(point,currentColor,lineWidth,texti,fontur);
 
 			// ctx.lineTo(x, y);
 			// ctx.stroke();
@@ -129,7 +140,7 @@ $(document).ready(function(){
 		ctx.fillStyle = color;		// Is this obsolete?
 		ctx.strokeStyle = color;
 		currentColor = color;
-		console.log("Color change to:" + currentColor);
+		console.log("Color change to: " + currentColor);
 	}
 
 	$(".color").blur(function() {
@@ -172,8 +183,30 @@ $(document).ready(function(){
 	});
 
 	$("#load").click(function() {
-		console.log("Loading")
+		console.log("Loading a list of drawings")
+
 		// TODO 
+			var param = { 
+				"user": "viktora12", // You should use your own username!
+				"template": true
+			};
+
+ 			$.ajax({
+				type: "POST",
+				contentType: "application/json; charset=utf-8",
+				url: "http://whiteboard.apphb.com/Home/GetList",
+				data: param,
+				dataType: "jsonp",
+				crossDomain: true,
+				success: function (data) {
+					console.log(data);
+					console.log("Load works")
+				},
+				error: function (xhr, err) {
+					// Something went wrong...
+					console.log("Load error")
+				}
+			});
 	});
 
 	$("#save").click(function() {
@@ -186,8 +219,7 @@ $(document).ready(function(){
 	function setlineWidth(x){
 		lineWidth = x;
 		$("#lineWidth").html(lineWidth);				// Update number
-		$("#slider").slider("value",lineWidth);	// Update slider
-		console.log("lineWidth change to: " + lineWidth);
+		$("#slider").slider("value",lineWidth);			// Update slider
 	}
 	function getlineWidth(){
 		return lineWidth;

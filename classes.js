@@ -3,13 +3,12 @@ function Point(x, y) {
 	this.y = y;
 }
 
-// ############### Rectangle ################
+// ############### Pen ################
 
-function Pen(color) {
+function Pen() {
 	this.points = [];
 	this.color = [];
 	this.lineWidth = undefined;
-	//console.log(color);
 }
 
 Pen.prototype.addPoint = function(p, color, lineWidth) {
@@ -51,11 +50,11 @@ Rectangle.prototype.addPoint = function(p, color, lineWidth) {
 	if(this.start === undefined) {
 		this.start = p;
 		console.log("Adding start point to rectangle");
-	}
-	else {
+	}else{
 		this.end = p;
 		console.log("Updating end point in rectangle");
-	}		
+	}	
+
 	this.color = color;
 	this.lineWidth = lineWidth;
 }
@@ -72,7 +71,7 @@ Rectangle.prototype.draw = function(ctx) {
 
 // ############### Line  ################
 
-function Line(){
+function Line() {
 	this.start = undefined;
 	this.end = undefined;
 	this.color = undefined;
@@ -106,23 +105,23 @@ function Texti() {
 	this.color = undefined;
 	this.lineWidth = undefined;
 	this.textmsg = undefined;
+	this.fontType = undefined;
 }
 
-Texti.prototype.addPoint = function (p, color, lineWidth, texti){
+Texti.prototype.addPoint = function (p, color, lineWidth, texti, fontur){
 	this.start = p;
 	this.color = color;
 	this.lineWidth = lineWidth;
 	this.textmsg = texti;
+	this.fontType = fontur;
 }
 
 Texti.prototype.draw = function (ctx) {
 	ctx.beginPath(); // So each line can have it's own color
 	ctx.fillStyle = this.color; 
-	// TODO : choose another font from a option / select box. 
-	// TODO : Take in custom text
-	// example : ctx.font = "30px Arial";
-	ctx.font = String(this.lineWidth + "px Arial");
-	//var textboxval = document.getElementById('textabox').value;
+
+	ctx.font = String(this.lineWidth + "px " + this.fontType );
+
 	ctx.fillText(this.textmsg, this.start.x, this.start.y);
 }
 
@@ -145,11 +144,13 @@ Circle.prototype.addPoint = function (p, color, lineWidth){
 		this.end = p;
 		console.log("Updating end point in rectangle");
 	}	
-	//Todo - subtract start point x,y from end point x,y
-	//Use pythagoras to calculate the distance and make that the radius!
+	
+	// TODO , maybe make dragging mouse down increase linewidth?
+	// Or while holding shift?
 
-	var width = this.end.x - this.start.x;
-	var height = this.end.y - this.start.y;
+	var width = Math.abs(this.end.x - this.start.x);
+	console.log(this.end.x);
+	var height = Math.abs(this.end.y - this.start.y);
 	this.radius = width + height; // Just testing!
 	this.color = color;
 	this.lineWidth = lineWidth;
