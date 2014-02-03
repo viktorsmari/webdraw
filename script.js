@@ -94,9 +94,6 @@ $(document).ready(function(){
 		var point = new Point(x, y);
 		currentTool.addPoint(point,currentColor,lineWidth,texti,fontur);		
 		ctx.moveTo(x,y);
-
-		console.log("Color: " + currentColor, "lineWidth: " + lineWidth);
-	//	mmove(e);			 // So we can add single dots
 	}
 
 	var mmove = function (e){
@@ -107,14 +104,6 @@ $(document).ready(function(){
 		
 			var point = new Point(x,y); 	// Create new point if pen is moved
 			currentTool.addPoint(point,currentColor,lineWidth,texti,fontur);
-
-			// ctx.lineTo(x, y);
-			// ctx.stroke();
-			// ctx.beginPath();
-			// ctx.arc(x, y, lineWidth, 0, Math.PI*2);	// Create a circle
-			// ctx.fill();
-			// ctx.beginPath();
-			// ctx.moveTo(x, y);
 
 			clearWindow();
 			drawShapes();
@@ -133,12 +122,11 @@ $(document).ready(function(){
 	canvas.addEventListener('mousemove', mmove);
 	canvas.addEventListener('mouseup', mup);
 	
-
 	// #################### Color ###########################
 
-	function setColor(color){		// Needs update    TODO
-		ctx.fillStyle = color;		// Is this obsolete?
-		ctx.strokeStyle = color;
+	function setColor(color){	
+		// ctx.fillStyle = color;
+		// ctx.strokeStyle = color;
 		currentColor = color;
 		console.log("Color change to: " + currentColor);
 	}
@@ -166,13 +154,15 @@ $(document).ready(function(){
 
 	$("#undo").click(function() {
 		console.log("Undoing")
-		shapes.pop();
+		undo.push( shapes.pop() );
 		clearWindow();
 		drawShapes();
 	});
 
 	$("#redo").click(function() {
-		console.log("Redoing")
+		console.log("Redoing");
+		shapes.push( undo.pop() );
+		clearWindow();
 		drawShapes();
 		// TODO - not working!
 	});
@@ -182,39 +172,96 @@ $(document).ready(function(){
 		console.log("Clearing")
 	});
 
-	$("#load").click(function() {
-		console.log("Loading a list of drawings")
+	// TODO : improve code, reuse.
 
-		// TODO 
-			var param = { 
-				"user": "viktora12", // You should use your own username!
-				"template": true
-			};
+	// ######################### Get List of drawings ################
+	$("#getlist").click(function() { 
 
- 			$.ajax({
-				type: "POST",
-				contentType: "application/json; charset=utf-8",
-				url: "http://whiteboard.apphb.com/Home/GetList",
-				data: param,
-				dataType: "jsonp",
-				crossDomain: true,
-				success: function (data) {
-					console.log(data);
-					console.log("Load works")
-				},
-				error: function (xhr, err) {
-					// Something went wrong...
-					console.log("Load error")
-				}
-			});
+		var param = { 
+			"user": "viktora12", 
+			"template": true
+		};
+
+		$.ajax({
+			type: "POST",
+			contentType: "application/json; charset=utf-8",
+			url: "http://whiteboard.apphb.com/Home/GetList",
+			data: param,
+			dataType: "jsonp",
+			crossDomain: true,
+			success: function (data) {
+				console.log("Loading a list of drawings")
+				console.log(data);
+			},
+			error: function (xhr, err) {
+				// Something went wrong...
+			}
+		});	
+
 	});
 
-	$("#save").click(function() {
-		console.log("Saving")
-		// TODO 
+	// ######################### LOAD  ################################
+	$("#load").click(function() { 
+		// TODO need to load id number
+		var loadnumber = $("#loadnumber").val() 
+
+		var param = { 
+			id:loadnumber
+		};
+
+		$.ajax({
+			type: "POST",
+			contentType: "application/json; charset=utf-8",
+			url: "http://whiteboard.apphb.com/Home/GetWhiteboard",
+			data: param,
+			dataType: "jsonp",
+			crossDomain: true,
+			success: function (data) {
+				console.log("Loading picture with id :" + loadnumber )
+				console.log(data);
+				clearWindow();
+				drawShapes();
+			},
+			error: function (xhr, err) {
+				// Something went wrong...
+			}
+		});	
+
 	});
 
-	
+	// ######################### SAVE #########################
+	$("#save").click(function() { 
+		console.log("Saving...")
+		// TODO 
+		
+		var title = $("#drawingTitle").val();
+
+		var stringifiedArray = JSON.stringify(shapes);
+
+		var param = { 
+			"user": "viktora12", // You should use your own username!
+			"name": title,
+			"content": stringifiedArray,
+			"template": true
+		};
+
+		$.ajax({
+			type: "POST",
+			contentType: "application/json; charset=utf-8",
+			url: "http://whiteboard.apphb.com/Home/Save",
+			data: param,
+			dataType: "jsonp",
+			crossDomain: true,
+			success: function (data) {
+				console.log("The save was successful...");
+				console.log(data);
+			},
+			error: function (xhr, err) {
+				console.log("Something went wrong...");
+			}
+		});
+	});
+
 	// #################### Slider lineWidth ##########################
 	function setlineWidth(x){
 		lineWidth = x;
@@ -245,7 +292,5 @@ $(document).ready(function(){
 	});
 
 	// #################### Color picker #######################
-
-	
 
 });
